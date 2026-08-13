@@ -3,26 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Birthday Surprise 🎂</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    overflow: hidden;
     height: 100vh;
+    overflow: hidden;
     font-family: Arial, sans-serif;
-    background: radial-gradient(circle at center, #18245c, #03040d);
     color: white;
+    background: radial-gradient(circle at bottom, #18245c, #03040d 75%);
 }
 
 /* Stars */
-
 .star {
     position: absolute;
     width: 2px;
@@ -32,345 +29,278 @@ body {
     opacity: 0.7;
 }
 
-/* Wish Letter */
-
-#letter {
+/* Password screen */
+#passwordScreen {
     position: absolute;
     width: 90%;
-    max-width: 550px;
+    max-width: 430px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 35px;
+    text-align: center;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 0 45px rgba(255,50,170,0.3);
+    z-index: 100;
+}
+
+.lock {
+    font-size: 70px;
+}
+
+#passwordScreen h2 {
+    color: #ff79c8;
+    text-shadow: 0 0 20px #ff1493;
+}
+
+#password {
+    width: 85%;
+    padding: 14px;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+#unlock {
+    margin-top: 15px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff1493, #8a5cff);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff1493;
+}
+
+#unlock:hover {
+    transform: scale(1.06);
+}
+
+#error {
+    color: #ff6b81;
+    display: none;
+    margin-top: 12px;
+}
+
+/* Wish letter */
+#letter {
+    display: none;
+    position: absolute;
+    width: 90%;
+    max-width: 560px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     padding: 35px;
     border-radius: 25px;
-
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(15px);
-
-    border: 1px solid rgba(255,255,255,0.3);
-
-    box-shadow:
-        0 0 40px rgba(255,80,180,0.35);
-
     text-align: center;
-    z-index: 20;
+    background: rgba(255,255,255,0.11);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 0 45px rgba(255,80,180,0.35);
+    z-index: 50;
 }
 
 .envelope {
-    font-size: 75px;
-    animation: floating 2s infinite alternate;
-}
-
-@keyframes floating {
-
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-10px);
-    }
-
+    font-size: 70px;
+    animation: float 2s infinite alternate;
 }
 
 #letter h2 {
-    font-size: 38px;
     color: #ff79c8;
-
-    text-shadow:
-        0 0 10px #ff1493,
-        0 0 30px #ff1493;
+    font-size: 36px;
+    text-shadow: 0 0 20px #ff1493;
 }
 
 .letterText {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.7;
-    color: #eeeeee;
 }
 
 #openButton {
-
-    margin-top: 20px;
-
-    padding: 15px 32px;
-
+    margin-top: 18px;
+    padding: 14px 30px;
     border: none;
-    border-radius: 40px;
-
-    background: linear-gradient(
-        45deg,
-        #ff1493,
-        #9b5cff
-    );
-
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff1493, #925cff);
     color: white;
-
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
-
     cursor: pointer;
-
-    box-shadow:
-        0 0 20px #ff1493;
-
-    transition: 0.3s;
+    box-shadow: 0 0 25px #ff1493;
 }
 
-#openButton:hover {
-
-    transform: scale(1.08);
-
-    box-shadow:
-        0 0 35px #ff1493;
-
+@keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
 }
-
 
 /* Countdown */
-
 #countdown {
-
+    display: none;
     position: absolute;
-
     left: 50%;
     top: 50%;
-
     transform: translate(-50%, -50%);
-
     font-size: 130px;
-
     font-weight: bold;
-
-    display: none;
-
-    z-index: 50;
-
-    color: white;
-
+    z-index: 80;
     text-shadow:
-        0 0 20px #ffffff,
+        0 0 20px white,
         0 0 50px #ff1493;
-
-    animation: countdownPop 0.8s;
 }
 
-@keyframes countdownPop {
+.countAnimation {
+    animation: countPop 0.8s;
+}
 
+@keyframes countPop {
     0% {
         transform: translate(-50%, -50%) scale(0.2);
         opacity: 0;
     }
-
     50% {
         transform: translate(-50%, -50%) scale(1.2);
         opacity: 1;
     }
-
     100% {
         transform: translate(-50%, -50%) scale(1);
     }
-
 }
 
-
-/* Birthday screen */
-
+/* Birthday */
 #birthday {
-
     display: none;
-
     position: relative;
-
     z-index: 10;
-
     text-align: center;
-
-    padding-top: 55px;
-
+    padding-top: 45px;
 }
 
 h1 {
-
     font-size: 58px;
-
     margin: 10px;
-
     color: #ff79c8;
-
     text-shadow:
         0 0 10px #ff79c8,
         0 0 30px #ff1493,
         0 0 60px #ff1493;
-
     animation: glow 1.5s infinite alternate;
-
 }
 
 .name {
-
     font-size: 30px;
-
-    margin-top: 10px;
-
-    text-shadow:
-        0 0 15px white;
-
+    text-shadow: 0 0 15px white;
 }
 
 .message {
-
-    margin: 25px auto;
-
     max-width: 600px;
-
+    margin: 20px auto;
+    padding: 0 20px;
     font-size: 19px;
-
     line-height: 1.6;
-
-    color: #f4f4f4;
-
 }
 
 .cake {
-
     font-size: 120px;
-
     animation: cakeBounce 1s infinite alternate;
-
 }
 
 @keyframes glow {
-
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.06);
-    }
-
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
 }
 
 @keyframes cakeBounce {
-
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-12px);
-    }
-
+    from { transform: translateY(0); }
+    to { transform: translateY(-12px); }
 }
-
 
 /* Balloons */
-
 .balloon {
-
     position: absolute;
-
     bottom: -120px;
-
     font-size: 65px;
-
-    z-index: 5;
-
     animation: balloonUp 8s linear infinite;
-
+    z-index: 5;
 }
 
-.b1 {
-    left: 8%;
-}
-
-.b2 {
-    left: 25%;
-    animation-delay: 2s;
-}
-
-.b3 {
-    left: 70%;
-    animation-delay: 1s;
-}
-
-.b4 {
-    left: 88%;
-    animation-delay: 3s;
-}
+.b1 { left: 8%; }
+.b2 { left: 25%; animation-delay: 2s; }
+.b3 { left: 70%; animation-delay: 1s; }
+.b4 { left: 88%; animation-delay: 3s; }
 
 @keyframes balloonUp {
-
-    from {
-        bottom: -120px;
-    }
-
-    to {
-        bottom: 110%;
-    }
-
+    from { bottom: -120px; }
+    to { bottom: 110%; }
 }
 
-
-/* Fireworks */
-
+/* Fireworks canvas */
 canvas {
-
     position: fixed;
-
     inset: 0;
-
     pointer-events: none;
-
     z-index: 2;
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-
 <!-- Stars -->
-
 <script>
-
 for (let i = 0; i < 120; i++) {
-
-    let star =
-        document.createElement("div");
-
+    const star = document.createElement("div");
     star.className = "star";
-
-    star.style.left =
-        Math.random() * 100 + "%";
-
-    star.style.top =
-        Math.random() * 80 + "%";
-
-    star.style.opacity =
-        Math.random();
-
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 80 + "%";
+    star.style.opacity = Math.random();
     document.body.appendChild(star);
-
 }
-
 </script>
 
 
-<!-- Wish Letter -->
+<!-- PASSWORD -->
+<div id="passwordScreen">
 
-<div id="letter">
+    <div class="lock">🔐</div>
 
-    <div class="envelope">
-        💌
+    <h2>Secret Birthday Surprise</h2>
+
+    <p>Enter the secret password 💖</p>
+
+    <input
+        id="password"
+        type="password"
+        placeholder="Enter password"
+    >
+
+    <br>
+
+    <button id="unlock" onclick="checkPassword()">
+        🔓 Unlock
+    </button>
+
+    <div id="error">
+        ❌ Wrong password!
     </div>
 
-    <h2>
-        A Special Birthday Wish
-    </h2>
+</div>
+
+
+<!-- WISH LETTER -->
+<div id="letter">
+
+    <div class="envelope">💌</div>
+
+    <h2>Special Birthday Wish</h2>
 
     <div class="letterText">
 
@@ -383,14 +313,14 @@ for (let i = 0; i < 120; i++) {
 
         <br>
 
-        তোমার জীবনের প্রতিটি দিন
-        আনন্দ, হাসি আর সুন্দর
-        মুহূর্তে ভরে উঠুক। ✨
+        তোমার জীবন আনন্দ,
+        হাসি আর সুন্দর মুহূর্তে
+        ভরে উঠুক। ✨
 
         <br><br>
 
         তোমার সব স্বপ্ন পূরণ হোক
-        এবং তোমার সামনে আসুক
+        এবং সামনে আসুক
         অসংখ্য সুন্দর দিন। 🌟
 
         <br><br>
@@ -399,50 +329,37 @@ for (let i = 0; i < 120; i++) {
 
     </div>
 
-    <button id="openButton"
-            onclick="startBirthday()">
-
+    <button id="openButton" onclick="startCountdown()">
         🎁 Open Surprise
-
     </button>
 
 </div>
 
 
-<!-- Countdown -->
-
+<!-- COUNTDOWN -->
 <div id="countdown"></div>
 
 
-<!-- Birthday -->
-
+<!-- BIRTHDAY -->
 <div id="birthday">
 
-    <h1>
-        🎉 HAPPY BIRTHDAY! 🎉
-    </h1>
+    <h1>🎉 HAPPY BIRTHDAY! 🎉</h1>
 
     <div class="name">
-
         💖 শুভ জন্মদিন, MARIA 💖
-
     </div>
 
     <div class="message">
-
-        May your life always be filled
-        with happiness, success,
-        laughter and beautiful memories. ✨
+        May your life always be filled with
+        happiness, success, laughter and
+        beautiful memories. ✨
 
         <br><br>
 
         🎂 Have an amazing birthday! 🎂
-
     </div>
 
-    <div class="cake">
-        🎂
-    </div>
+    <div class="cake">🎂</div>
 
     <div class="balloon b1">🎈</div>
     <div class="balloon b2">🎈</div>
@@ -452,51 +369,94 @@ for (let i = 0; i < 120; i++) {
 </div>
 
 
-<!-- Firework Canvas -->
-
+<!-- FIREWORK CANVAS -->
 <canvas id="fireworks"></canvas>
 
 
 <script>
 
+/* =====================================
+   PASSWORD
+===================================== */
 
-/* =========================
+function checkPassword() {
+
+    /* CHANGE PASSWORD HERE */
+    const correctPassword = "1234";
+
+    const entered =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("error");
+
+    if (entered === correctPassword) {
+
+        document.getElementById("passwordScreen")
+            .style.display = "none";
+
+        document.getElementById("letter")
+            .style.display = "block";
+
+    } else {
+
+        error.style.display = "block";
+
+    }
+}
+
+
+/* Enter key also works */
+
+document.getElementById("password")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            checkPassword();
+        }
+
+    });
+
+
+/* =====================================
    COUNTDOWN
-========================= */
+===================================== */
 
-function startBirthday() {
+function startCountdown() {
 
     document.getElementById("letter")
         .style.display = "none";
 
-    let countdown =
+    const countdown =
         document.getElementById("countdown");
 
     countdown.style.display = "block";
 
-    let numbers =
+    const numbers =
         ["10","9","8","7","6","5","4","3","2","1","🎉"];
 
     let i = 0;
 
-    function nextNumber() {
+    function showNumber() {
 
         countdown.innerHTML =
             numbers[i];
 
-        countdown.style.animation =
-            "none";
+        countdown.classList.remove(
+            "countAnimation"
+        );
 
         void countdown.offsetWidth;
 
-        countdown.style.animation =
-            "countdownPop 0.8s";
+        countdown.classList.add(
+            "countAnimation"
+        );
 
         i++;
 
         if (i < numbers.length) {
 
-            setTimeout(nextNumber, 900);
+            setTimeout(showNumber, 900);
 
         } else {
 
@@ -516,14 +476,13 @@ function startBirthday() {
 
     }
 
-    nextNumber();
-
+    showNumber();
 }
 
 
-/* =========================
-   FIREWORK ENGINE
-========================= */
+/* =====================================
+   REALISTIC FIREWORKS
+===================================== */
 
 const canvas =
     document.getElementById("fireworks");
@@ -532,7 +491,6 @@ const ctx =
     canvas.getContext("2d");
 
 let rockets = [];
-
 let particles = [];
 
 
@@ -554,12 +512,11 @@ window.addEventListener(
 );
 
 
-/* Colors */
+/* Random firework color */
 
 function randomColor() {
 
-    let colors = [
-
+    const colors = [
         "#ff3b30",
         "#ffd60a",
         "#32d74b",
@@ -567,28 +524,25 @@ function randomColor() {
         "#bf5af2",
         "#ff375f",
         "#ffffff"
-
     ];
 
     return colors[
         Math.floor(
-            Math.random() *
-            colors.length
+            Math.random() * colors.length
         )
     ];
-
 }
 
 
-/* Rocket */
+/* Create rocket */
 
 function createRocket() {
 
-    let x =
+    const x =
         Math.random() *
         canvas.width;
 
-    let targetY =
+    const targetY =
         canvas.height *
         (0.12 +
         Math.random() * 0.35);
@@ -601,13 +555,14 @@ function createRocket() {
 
         targetY: targetY,
 
-        speed: 7 +
-        Math.random() * 3,
+        speed:
+            7 +
+            Math.random() * 3,
 
-        color: randomColor()
+        color:
+            randomColor()
 
     });
-
 }
 
 
@@ -615,17 +570,17 @@ function createRocket() {
 
 function explode(x, y, color) {
 
-    let count =
+    const count =
         120 +
         Math.random() * 80;
 
     for (let i = 0; i < count; i++) {
 
-        let angle =
+        const angle =
             Math.random() *
             Math.PI * 2;
 
-        let speed =
+        const speed =
             Math.random() * 8 + 2;
 
         particles.push({
@@ -635,12 +590,12 @@ function explode(x, y, color) {
             y: y,
 
             vx:
-                Math.cos(angle)
-                * speed,
+                Math.cos(angle) *
+                speed,
 
             vy:
-                Math.sin(angle)
-                * speed,
+                Math.sin(angle) *
+                speed,
 
             gravity: 0.075,
 
@@ -650,12 +605,13 @@ function explode(x, y, color) {
                 100 +
                 Math.random() * 40,
 
-            maxLife: 130,
+            maxLife: 140,
 
             color: color,
 
             size:
-                Math.random() * 2.5 + 1
+                Math.random() *
+                2.5 + 1
 
         });
 
@@ -664,13 +620,11 @@ function explode(x, y, color) {
 }
 
 
-/* Animation */
+/* Firework animation */
 
 function animate() {
 
-    requestAnimationFrame(
-        animate
-    );
+    requestAnimationFrame(animate);
 
     ctx.fillStyle =
         "rgba(3,4,13,0.20)";
@@ -691,7 +645,7 @@ function animate() {
         i--
     ) {
 
-        let r =
+        const r =
             rockets[i];
 
         r.y -= r.speed;
@@ -728,10 +682,7 @@ function animate() {
                 r.color
             );
 
-            rockets.splice(
-                i,
-                1
-            );
+            rockets.splice(i, 1);
 
         }
 
@@ -747,7 +698,7 @@ function animate() {
         i--
     ) {
 
-        let p =
+        const p =
             particles[i];
 
         p.x += p.vx;
@@ -762,15 +713,12 @@ function animate() {
 
         p.life--;
 
-        let alpha =
+        const alpha =
             p.life /
             p.maxLife;
 
         ctx.globalAlpha =
-            Math.max(
-                alpha,
-                0
-            );
+            Math.max(alpha, 0);
 
         ctx.beginPath();
 
@@ -795,14 +743,9 @@ function animate() {
         ctx.globalAlpha = 1;
 
 
-        if (
-            p.life <= 0
-        ) {
+        if (p.life <= 0) {
 
-            particles.splice(
-                i,
-                1
-            );
+            particles.splice(i, 1);
 
         }
 
@@ -823,12 +766,12 @@ function startFireworks() {
 
     setTimeout(
         createRocket,
-        400
+        350
     );
 
     setTimeout(
         createRocket,
-        800
+        700
     );
 
     setInterval(() => {
